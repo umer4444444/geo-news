@@ -7,6 +7,7 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Article = {
   
+  
   title: string;
   source: { name: string };
   urlToImage?: string;
