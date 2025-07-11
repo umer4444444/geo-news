@@ -17,6 +17,7 @@ export default function SplashScreen({ navigation }: Props) {
         useNativeDriver: true,
       }),
       Animated.spring(scale, {
+        
         toValue: 1,
         friction: 3,
         useNativeDriver: true,
