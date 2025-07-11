@@ -39,12 +39,11 @@ const HomeScreen = () => {
       {/* Geo News Logo Header */}
       <View style={styles.logoContainer}>
         <Image
-          source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/en/8/8e/Geo_News_logo.png', // ✅ Use valid remote image URL
-          }}
+          source={require('../assets/geo_logo_transparent.png')}
           style={styles.logo}
           resizeMode="contain"
         />
+
       </View>
 
       {/* Live TV Button */}
@@ -87,8 +86,11 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
-    width: 180,
-    height: 60,
+    width: 400,
+    height: 200,
+    marginTop:1,
+    
+    
   },
   liveButton: {
     backgroundColor: '#d10000',
