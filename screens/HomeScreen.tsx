@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Image, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { ScrollView, Image, TouchableOpacity, View, StyleSheet, SafeAreaView } from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
@@ -35,48 +35,52 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <ScrollView>
-      {/* Geo News Logo Header */}
-      <View style={styles.logoContainer}>
-        <Image
-          source={{
-            uri: 'https://upload.wikimedia.org/wikipedia/en/8/8e/Geo_News_logo.png', // ✅ Use valid remote image URL
-          }}
-          style={styles.logo}
-          resizeMode="contain"
-        />
-      </View>
+    <SafeAreaView style={{ flex: 1 }}>
+      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
+        {/* Geo News Logo Header */}
+        <View style={styles.logoContainer}>
+          <Image
+            source={{
+              uri: 'https://your-image-url-or-remote-image.webp', // update this to a valid URL or local image
+            }}
+            style={styles.logo}
+            resizeMode="contain"
+          />
+        </View>
 
-      {/* Live TV Button */}
-      <TouchableOpacity
-        style={styles.liveButton}
-        onPress={() => navigation.navigate('LiveTV')}
-      >
-        <Text style={styles.liveButtonText}>📺 Watch Geo News Live</Text>
-      </TouchableOpacity>
+        {articles.map((item, index) => (
+          <TouchableOpacity
+            key={index}
+            onPress={() => navigation.navigate('ArticleDetail', { article: item })}
+          >
+            <Card style={{ margin: 10 }}>
+              <Card.Cover
+                source={{
+                  uri: item.urlToImage
+                    ? item.urlToImage
+                    : 'https://via.placeholder.com/400x200.png?text=No+Image',
+                }}
+              />
+              <Card.Content>
+                <Text variant="titleMedium">{item.title}</Text>
+                <Text variant="bodySmall">{item.source.name}</Text>
+              </Card.Content>
+            </Card>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
 
-      {/* Articles */}
-      {articles.map((item, index) => (
+      {/* Footer Play Button */}
+      <View style={styles.footer}>
         <TouchableOpacity
-          key={index}
-          onPress={() => navigation.navigate('ArticleDetail', { article: item })}
+          style={styles.playButton}
+          onPress={() => navigation.navigate('LiveTV')}
+          activeOpacity={0.7}
         >
-          <Card style={{ margin: 10 }}>
-            <Card.Cover
-              source={{
-                uri: item.urlToImage
-                  ? item.urlToImage
-                  : 'https://via.placeholder.com/400x200.png?text=No+Image',
-              }}
-            />
-            <Card.Content>
-              <Text variant="titleMedium">{item.title}</Text>
-              <Text variant="bodySmall">{item.source.name}</Text>
-            </Card.Content>
-          </Card>
+          <Text style={styles.playButtonText}>▶️ Watch Live TV</Text>
         </TouchableOpacity>
-      ))}
-    </ScrollView>
+      </View>
+    </SafeAreaView>
   );
 };
 
@@ -90,16 +94,25 @@ const styles = StyleSheet.create({
     width: 180,
     height: 60,
   },
-  liveButton: {
-    backgroundColor: '#d10000',
-    padding: 12,
-    borderRadius: 8,
-    margin: 10,
+  footer: {
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    paddingHorizontal: 20,
     alignItems: 'center',
+    backgroundColor: 'transparent',
   },
-  liveButtonText: {
+  playButton: {
+    backgroundColor: '#d10000',
+    paddingVertical: 14,
+    paddingHorizontal: 40,
+    borderRadius: 30,
+    elevation: 5,
+  },
+  playButtonText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });
