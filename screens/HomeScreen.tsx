@@ -13,12 +13,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Article = {
-<<<<<<< HEAD
+
   id: number;
-=======
+
   
 
->>>>>>> ec205a73607a1128c02b58fa0b3250cfc763ca72
+
   title: string;
   description: string;
   image?: string;
