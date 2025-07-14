@@ -171,6 +171,7 @@ urduLabel: {
 },
 
 
+
 });
 
 export default HomeScreen;
