@@ -24,7 +24,7 @@ export default function SplashScreen({ navigation }: Props) {
       }),
     ]).start(() => {
       setTimeout(() => {
-        navigation.replace('Home'); // Navigate to Home after splash
+        navigation.replace('Main'); // Navigate to Home after splash
       }, 1000);
     });
   }, [navigation, opacity, scale]);

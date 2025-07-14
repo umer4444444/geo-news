@@ -13,7 +13,12 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Article = {
+<<<<<<< HEAD
   id: number;
+=======
+  
+
+>>>>>>> ec205a73607a1128c02b58fa0b3250cfc763ca72
   title: string;
   description: string;
   image?: string;
@@ -60,6 +65,24 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <View style={styles.customHeader}>
+  {/* Burger Icon */}
+  <TouchableOpacity onPress={() => console.log('Burger clicked')}>
+    <Text style={styles.burger}>☰</Text>
+  </TouchableOpacity>
+
+  {/* Logo */}
+  <Image
+    source={require('../assets/geo_logo_transparent.png')} // ✅ use your transparent logo
+    style={styles.headerLogo}
+    resizeMode="contain"
+  />
+
+  {/* Urdu Label */}
+  <TouchableOpacity onPress={() => console.log('Switch to Urdu')}>
+    <Text style={styles.urduLabel}>اردو</Text>
+  </TouchableOpacity>
+</View>
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
         {/* News Logo Header */}
         <View style={styles.logoContainer}>
@@ -93,7 +116,7 @@ const HomeScreen = () => {
       </ScrollView>
 
       {/* Footer Play Button */}
-      <View style={styles.footer}>
+      {/* <View style={styles.footer}>
         <TouchableOpacity
           style={styles.playButton}
           onPress={() => navigation.navigate('LiveTV')}
@@ -101,7 +124,7 @@ const HomeScreen = () => {
         >
           <Text style={styles.playButtonText}>▶️ Watch Live TV</Text>
         </TouchableOpacity>
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 };
@@ -137,6 +160,42 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+ customHeader: {
+  
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  paddingHorizontal: 15,
+  paddingTop:9, // More spacing from top
+  backgroundColor: '#fff',
+  elevation: 4,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ddd',
+},
+
+burger: {
+  fontSize: 28,
+  fontWeight: 'bold',
+  color: '#000',
+},
+
+headerLogo: {
+  width: 250,    // ⬅️ increased width
+  height: 100,    // ⬅️ increased height
+},
+
+urduLabel: {
+  fontSize: 18,
+  backgroundColor: '#007bff', // Bootstrap blue
+  color: '#fff',
+  fontWeight: 'bold',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 8,
+  overflow: 'hidden',
+},
+
+
 });
 
 export default HomeScreen;
