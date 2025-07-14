@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { ScrollView, Image, TouchableOpacity, View, StyleSheet, SafeAreaView } from 'react-native';
+import {
+  ScrollView,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+} from 'react-native';
 import { Text, Card } from 'react-native-paper';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Article = {
+
+  id: number;
+
   
 
+
   title: string;
+  description: string;
+  image?: string;
+  date?: string;
+  url?: string;
   source: { name: string };
-  urlToImage?: string;
-  description?: string;
-  content?: string;
 };
 
 type RootStackParamList = {
@@ -20,20 +32,35 @@ type RootStackParamList = {
   LiveTV: undefined;
 };
 
+const BASE_IMAGE_URL = 'https://srv1915-files.hstgr.io/4d4fb51905eaf38e/files/public_html/images/';
+ // Change IP & path if needed
+
 const HomeScreen = () => {
   const [articles, setArticles] = useState<Article[]>([]);
   const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
+  // Helper to build full image URL or fallback
+  const getImageUrl = (imageName?: string) => {
+    if (!imageName) {
+      return 'https://via.placeholder.com/400x200.png?text=No+Image';
+    }
+    // If already full URL, return as is
+    if (imageName.startsWith('http')) {
+      return imageName;
+    }
+    return BASE_IMAGE_URL + imageName;
+  };
+
   useEffect(() => {
     axios
-      .get(
-        'https://newsapi.org/v2/everything?q=pakistan&sortBy=publishedAt&language=en&apiKey=d98b725fa0c74dc897cd195b51386392'
-      )
+      .get('http://192.168.1.9/47news-api/get-posts.php') // Your API endpoint
       .then((res) => {
-        const shuffled = res.data.articles.sort(() => 0.5 - Math.random());
-        setArticles(shuffled.slice(0, 20));
+        if (res.data && res.data.articles) {
+          const shuffled = res.data.articles.sort(() => 0.5 - Math.random());
+          setArticles(shuffled.slice(0, 20));
+        }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('API Error:', err));
   }, []);
 
   return (
@@ -57,17 +84,18 @@ const HomeScreen = () => {
   </TouchableOpacity>
 </View>
       <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-        {/* Geo News Logo Header */}
+        {/* News Logo Header */}
         <View style={styles.logoContainer}>
           <Image
             source={{
-              uri: 'https://your-image-url-or-remote-image.webp', // update this to a valid URL or local image
+              uri: 'https://your-image-url-or-remote-image.webp', // Replace with your logo URL
             }}
             style={styles.logo}
             resizeMode="contain"
           />
         </View>
 
+        {/* Article Cards */}
         {articles.map((item, index) => (
           <TouchableOpacity
             key={index}
@@ -75,11 +103,8 @@ const HomeScreen = () => {
           >
             <Card style={{ margin: 10 }}>
               <Card.Cover
-                source={{
-                  uri: item.urlToImage
-                    ? item.urlToImage
-                    : 'https://via.placeholder.com/400x200.png?text=No+Image',
-                }}
+                source={{ uri: getImageUrl(item.image) }}
+                style={{ height: 200 }}
               />
               <Card.Content>
                 <Text variant="titleMedium">{item.title}</Text>
