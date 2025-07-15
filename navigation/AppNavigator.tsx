@@ -8,6 +8,7 @@ import BottomTabs from './BottomTabs';
 const Stack = createNativeStackNavigator();
 
 
+
 export default function AppNavigator() {
   return (
     <NavigationContainer>

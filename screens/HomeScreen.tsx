@@ -182,6 +182,46 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
   },
+<<<<<<< HEAD
+=======
+ customHeader: {
+  
+  flexDirection: 'row',
+  alignItems: 'center',
+  justifyContent: 'space-between',
+  paddingHorizontal: 15,
+  paddingTop:9, // More spacing from top
+  backgroundColor: '#fff',
+  elevation: 4,
+  borderBottomWidth: 1,
+  borderBottomColor: '#ddd',
+},
+
+burger: {
+  fontSize: 28,
+  fontWeight: 'bold',
+  color: '#000',
+},
+
+headerLogo: {
+  width: 250,    // ⬅️ increased width
+  height: 100,    // ⬅️ increased height
+},
+
+urduLabel: {
+  fontSize: 18,
+  backgroundColor: '#007bff', // Bootstrap blue
+  color: '#fff',
+  fontWeight: 'bold',
+  paddingHorizontal: 12,
+  paddingVertical: 6,
+  borderRadius: 8,
+  overflow: 'hidden',
+},
+
+
+
+>>>>>>> b280c229a2bd3764abe17d2761a638ef061a7701
 });
 
 export default HomeScreen;
