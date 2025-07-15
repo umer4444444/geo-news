@@ -1,13 +1,10 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-
 import { View, Text } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons'; // ✅ Correct icon library
+
 import HomeScreen from '../screens/HomeScreen';
 import LiveTVScreen from '../screens/LiveTVScreen';
-import { Icon } from 'react-native-paper';
-
-
 
 const Tab = createBottomTabNavigator();
 
@@ -37,8 +34,7 @@ const BottomTabs = () => {
         options={{
           tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
-            <Icon name="home-outline" size={24} color={color} />
-            
+            <Ionicons name="home-outline" size={size} color={color} />
           ),
         }}
       />
@@ -47,8 +43,8 @@ const BottomTabs = () => {
         component={LiveTVScreen}
         options={{
           tabBarLabel: 'Live',
-          tabBarIcon: ({ color }) => (
-            <Icon name="play-circle" size={40} color="#d10000" />
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="play-circle" size={size + 8} color="#d10000" />
           ),
         }}
       />
@@ -57,8 +53,8 @@ const BottomTabs = () => {
         component={VideosScreen}
         options={{
           tabBarLabel: 'Videos',
-          tabBarIcon: ({ color }) => (
-            <Icon name="videocam-outline" size={24} color={color} />
+          tabBarIcon: ({ color, size }) => (
+            <Ionicons name="videocam-outline" size={size} color={color} />
           ),
         }}
       />

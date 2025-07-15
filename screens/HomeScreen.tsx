@@ -13,12 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 
 type Article = {
-
   id: number;
-
-  
-
-
   title: string;
   description: string;
   image?: string;
@@ -32,19 +27,18 @@ type RootStackParamList = {
   LiveTV: undefined;
 };
 
-const BASE_IMAGE_URL = 'https://srv1915-files.hstgr.io/4d4fb51905eaf38e/files/public_html/images/';
- // Change IP & path if needed
+const BASE_IMAGE_URL =
+  'https://srv1915-files.hstgr.io/4d4fb51905eaf38e/files/public_html/images/';
 
 const HomeScreen = () => {
   const [articles, setArticles] = useState<Article[]>([]);
-  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  const navigation =
+    useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
-  // Helper to build full image URL or fallback
   const getImageUrl = (imageName?: string) => {
     if (!imageName) {
       return 'https://via.placeholder.com/400x200.png?text=No+Image';
     }
-    // If already full URL, return as is
     if (imageName.startsWith('http')) {
       return imageName;
     }
@@ -53,7 +47,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.1.9/47news-api/get-posts.php') // Your API endpoint
+      .get('http://192.168.1.9/47news-api/get-posts.php')
       .then((res) => {
         if (res.data && res.data.articles) {
           const shuffled = res.data.articles.sort(() => 0.5 - Math.random());
@@ -65,41 +59,41 @@ const HomeScreen = () => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      {/* Top Header */}
       <View style={styles.customHeader}>
-  {/* Burger Icon */}
-  <TouchableOpacity onPress={() => console.log('Burger clicked')}>
-    <Text style={styles.burger}>☰</Text>
-  </TouchableOpacity>
+        <TouchableOpacity onPress={() => console.log('Burger clicked')}>
+          <Text style={styles.burger}>☰</Text>
+        </TouchableOpacity>
 
-  {/* Logo */}
   <Image
-    source={require('../assets/geo_logo_transparent.png')} // ✅ use your transparent logo
+    source={{ uri: 'https://47news.tv/47logo.png' }}
     style={styles.headerLogo}
     resizeMode="contain"
   />
 
-  {/* Urdu Label */}
-  <TouchableOpacity onPress={() => console.log('Switch to Urdu')}>
-    <Text style={styles.urduLabel}>اردو</Text>
-  </TouchableOpacity>
-</View>
-      <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
-        {/* News Logo Header */}
-        <View style={styles.logoContainer}>
-          <Image
-            source={{
-              uri: 'https://your-image-url-or-remote-image.webp', // Replace with your logo URL
-            }}
-            style={styles.logo}
-            resizeMode="contain"
-          />
-        </View>
 
-        {/* Article Cards */}
+        <TouchableOpacity onPress={() => console.log('Switch to Urdu')}>
+          <Text style={styles.urduLabel}>اردو</Text>
+        </TouchableOpacity>
+      </View>
+
+      {/* Center Logo */}
+      <View style={styles.logoContainer}>
+        <Image
+          source={{ uri: 'https://47news.tv/47logo.png' }} // ✅ Web logo (optional)
+          style={styles.logo}
+          resizeMode="contain"
+        />
+      </View>
+
+      {/* News Articles */}
+      <ScrollView contentContainerStyle={{ paddingBottom: 100 }}>
         {articles.map((item, index) => (
           <TouchableOpacity
             key={index}
-            onPress={() => navigation.navigate('ArticleDetail', { article: item })}
+            onPress={() =>
+              navigation.navigate('ArticleDetail', { article: item })
+            }
           >
             <Card style={{ margin: 10 }}>
               <Card.Cover
@@ -115,16 +109,15 @@ const HomeScreen = () => {
         ))}
       </ScrollView>
 
-      {/* Footer Play Button */}
-      {/* <View style={styles.footer}>
+      {/* Bottom Menu Bar */}
+      <View style={styles.bottomMenu}>
         <TouchableOpacity
-          style={styles.playButton}
+          style={styles.menuButton}
           onPress={() => navigation.navigate('LiveTV')}
-          activeOpacity={0.7}
         >
-          <Text style={styles.playButtonText}>▶️ Watch Live TV</Text>
+          <Text style={styles.menuButtonText}>📺 Watch Live</Text>
         </TouchableOpacity>
-      </View> */}
+      </View>
     </SafeAreaView>
   );
 };
@@ -136,30 +129,61 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   logo: {
+    width: 200,
+    height: 50,
+  },
+  customHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 15,
+    paddingTop: 9,
+    backgroundColor: '#fff',
+    elevation: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: '#ddd',
+  },
+  burger: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  headerLogo: {
     width: 180,
     height: 60,
   },
-  footer: {
+  urduLabel: {
+    fontSize: 18,
+    backgroundColor: '#007bff',
+    color: '#fff',
+    fontWeight: 'bold',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 8,
+    overflow: 'hidden',
+  },
+  bottomMenu: {
     position: 'absolute',
-    bottom: 10,
+    bottom: 0,
     left: 0,
     right: 0,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-  },
-  playButton: {
     backgroundColor: '#d10000',
-    paddingVertical: 14,
-    paddingHorizontal: 40,
-    borderRadius: 30,
-    elevation: 5,
+    paddingVertical: 12,
+    alignItems: 'center',
+    borderTopWidth: 1,
+    borderTopColor: '#ccc',
   },
-  playButtonText: {
+  menuButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  menuButtonText: {
     color: '#fff',
     fontSize: 18,
     fontWeight: 'bold',
   },
+<<<<<<< HEAD
+=======
  customHeader: {
   
   flexDirection: 'row',
@@ -197,6 +221,7 @@ urduLabel: {
 
 
 
+>>>>>>> b280c229a2bd3764abe17d2761a638ef061a7701
 });
 
 export default HomeScreen;
