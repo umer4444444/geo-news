@@ -32,9 +32,7 @@ export default function SplashScreen({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Animated.Image
-        source={{
-          uri: 'https://www.bing.com/th/id/OIP.e7_E7zcIcDcfzmRFOfvDSgHaHa?w=218&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',
-        }}
+        source={require('../assets/logo.png')}
         style={[
           styles.logo,
           {

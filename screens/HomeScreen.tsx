@@ -47,7 +47,7 @@ const HomeScreen = () => {
 
   useEffect(() => {
     axios
-      .get('http://192.168.1.9/47news-api/get-posts.php')
+      .get('http://192.168.1.12/47news-api/get-posts.php')
       .then((res) => {
         if (res.data && res.data.articles) {
           const shuffled = res.data.articles.sort(() => 0.5 - Math.random());
@@ -58,19 +58,18 @@ const HomeScreen = () => {
   }, []);
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
       {/* Top Header */}
       <View style={styles.customHeader}>
         <TouchableOpacity onPress={() => console.log('Burger clicked')}>
           <Text style={styles.burger}>☰</Text>
         </TouchableOpacity>
 
-  <Image
-    source={{ uri: 'https://47news.tv/47logo.png' }}
-    style={styles.headerLogo}
-    resizeMode="contain"
-  />
-
+        <Image
+          source={require('../assets/logo.png')}
+          style={styles.headerLogo}
+          resizeMode="contain"
+        />
 
         <TouchableOpacity onPress={() => console.log('Switch to Urdu')}>
           <Text style={styles.urduLabel}>اردو</Text>
@@ -80,7 +79,7 @@ const HomeScreen = () => {
       {/* Center Logo */}
       <View style={styles.logoContainer}>
         <Image
-          source={{ uri: 'https://47news.tv/47logo.png' }} // ✅ Web logo (optional)
+          source={{ uri: 'https://47news.tv/47logo.png' }}
           style={styles.logo}
           resizeMode="contain"
         />
@@ -95,13 +94,15 @@ const HomeScreen = () => {
               navigation.navigate('ArticleDetail', { article: item })
             }
           >
-            <Card style={{ margin: 10 }}>
+            <Card style={styles.articleCard}>
               <Card.Cover
                 source={{ uri: getImageUrl(item.image) }}
                 style={{ height: 200 }}
               />
               <Card.Content>
-                <Text variant="titleMedium">{item.title}</Text>
+                <Text variant="titleMedium" style={{ color: '#0d6a00' }}>
+                  {item.title}
+                </Text>
                 <Text variant="bodySmall">{item.source.name}</Text>
               </Card.Content>
             </Card>
@@ -137,8 +138,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 15,
-    paddingTop: 9,
-    backgroundColor: '#fff',
+    paddingTop: 25,
+    backgroundColor: '#0d6a00', // Green
     elevation: 4,
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
@@ -146,7 +147,7 @@ const styles = StyleSheet.create({
   burger: {
     fontSize: 28,
     fontWeight: 'bold',
-    color: '#000',
+    color: 'white',
   },
   headerLogo: {
     width: 180,
@@ -154,20 +155,26 @@ const styles = StyleSheet.create({
   },
   urduLabel: {
     fontSize: 18,
-    backgroundColor: '#007bff',
-    color: '#fff',
+    backgroundColor: 'white',
+    color: '#0d6a00',
     fontWeight: 'bold',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 8,
     overflow: 'hidden',
   },
+  articleCard: {
+    margin: 10,
+    backgroundColor: '#f8fff8', // very light green
+    borderWidth: 1,
+    borderColor: '#d6e9d6',
+  },
   bottomMenu: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     right: 0,
-    backgroundColor: '#d10000',
+    backgroundColor: '#0d6a00',
     paddingVertical: 12,
     alignItems: 'center',
     borderTopWidth: 1,
@@ -178,50 +185,10 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   menuButtonText: {
-    color: '#fff',
+    color: '#ffffff',
     fontSize: 18,
     fontWeight: 'bold',
   },
-<<<<<<< HEAD
-=======
- customHeader: {
-  
-  flexDirection: 'row',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  paddingHorizontal: 15,
-  paddingTop:9, // More spacing from top
-  backgroundColor: '#fff',
-  elevation: 4,
-  borderBottomWidth: 1,
-  borderBottomColor: '#ddd',
-},
-
-burger: {
-  fontSize: 28,
-  fontWeight: 'bold',
-  color: '#000',
-},
-
-headerLogo: {
-  width: 250,    // ⬅️ increased width
-  height: 100,    // ⬅️ increased height
-},
-
-urduLabel: {
-  fontSize: 18,
-  backgroundColor: '#007bff', // Bootstrap blue
-  color: '#fff',
-  fontWeight: 'bold',
-  paddingHorizontal: 12,
-  paddingVertical: 6,
-  borderRadius: 8,
-  overflow: 'hidden',
-},
-
-
-
->>>>>>> b280c229a2bd3764abe17d2761a638ef061a7701
 });
 
 export default HomeScreen;
